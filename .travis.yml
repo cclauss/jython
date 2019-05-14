@@ -1,28 +1,20 @@
 language: java
 
-notifications:
-  email:
-    recipients:
-      - jython-dev@lists.sourceforge.net
-
 addons:
   homebrew:
     update: true
-    packages:
-      - ant
+    packages: ant
 
 matrix:
   include:
       - jdk: openjdk7
-      - jdk: openjdk8  # temporary
+      # - jdk: openjdk8
       - jdk: oraclejdk8
-      - jdk: oraclejdk9  # temporary
-      - jdk: oraclejdk11  # temporary
+      # - jdk: oraclejdk9
+      # - jdk: oraclejdk11  # times out
       - os: osx
-        install:  # overrides the linux "install:" below
-          - echo $JAVA_HOME  # temporary
-          - export JAVA_HOME=$(/usr/libexec/java_home)
-          - echo $JAVA_HOME  # temporary
+        name: "JDK: oraclejdk10 Java on macOS"
+        install: export JAVA_HOME=$(/usr/libexec/java_home)
 
 before_install:
   # Patch for buffer overflow bug, see https://github.com/travis-ci/travis-ci/issues/5227
@@ -37,3 +29,7 @@ install: ant
 
 script: ant && ant regrtest-travis
 
+notifications:
+  email:
+    recipients:
+      - jython-dev@lists.sourceforge.net
